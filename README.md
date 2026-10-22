@@ -1,437 +1,277 @@
-\# AI-Powered Network Intrusion Detection
+# AI-Powered Network Intrusion Detection System
 
+An AI-powered cybersecurity project that applies machine learning to network traffic classification to identify potentially malicious activity. The system uses the UNSW-NB15 dataset, a Scikit-learn Random Forest pipeline, a FastAPI prediction service, and a Streamlit dashboard.
 
+## Project Overview
 
-An intelligent network intrusion detection system that uses machine learning to classify network traffic as \*\*Normal\*\* or \*\*Attack\*\*. The project uses the UNSW-NB15 dataset and provides a REST API and an interactive Streamlit dashboard.
+Network intrusion detection is an important component of cybersecurity. Traditional detection approaches can struggle to identify complex traffic patterns and previously unseen combinations of network behaviors.
 
+This project explores supervised machine learning for binary network traffic classification, distinguishing between **Normal** traffic and **Attack** traffic. It provides a reusable model pipeline, a REST API for predictions, and an interactive dashboard for testing and evaluating the model.
 
+**Important:** This is a research and educational prototype. Its predictions are not a definitive security verdict and should not be used as the sole basis for security decisions.
 
-\## Project Overview
+## Key Features
 
+- **Machine learning:** Random Forest classification using Scikit-learn.
+- **Data preprocessing:** A pipeline for preprocessing numerical and categorical features.
+- **Binary classification:** Predicts whether supplied network traffic is Normal or Attack.
+- **REST API:** FastAPI endpoints for health checks and model predictions.
+- **Interactive dashboard:** Streamlit interface for entering traffic features and viewing predictions.
+- **Model evaluation:** Accuracy, precision, recall, F1-score, ROC-AUC, and confusion matrix.
+- **Model comparison:** Results from evaluating multiple machine learning algorithms.
+- **Reproducibility:** A training script and dependency list for setting up the project.
 
-
-Network intrusion detection helps identify suspicious activity and potential cyberattacks by analyzing network traffic characteristics. This project applies supervised machine learning to classify network traffic and provide estimated probabilities for normal and malicious traffic.
-
-
-
-The system is designed as a practical cybersecurity and machine learning portfolio project.
-
-
-
-\## Key Features
-
-
-
-\- Binary classification of network traffic: Normal or Attack.
-
-\- Data preprocessing for numerical and categorical features.
-
-\- Comparison of multiple machine learning algorithms.
-
-\- Random Forest classification pipeline.
-
-\- Evaluation using accuracy, precision, recall, F1-score, and ROC-AUC.
-
-\- Confusion matrix for evaluating classification errors.
-
-\- FastAPI REST API for network traffic predictions.
-
-\- Interactive Streamlit dashboard.
-
-\- Saved model comparison results and evaluation reports.
-
-
-
-\## Technology Stack
-
-
+## Technology Stack
 
 | Component | Technologies |
-
 |---|---|
-
 | Programming language | Python |
-
 | Data analysis | Pandas, NumPy |
-
-| Machine learning | scikit-learn |
-
-| Data visualization | Matplotlib, Seaborn |
-
+| Machine learning | Scikit-learn |
+| Visualization | Matplotlib, Seaborn |
 | Model persistence | Joblib |
+| API development | FastAPI, Uvicorn |
+| Dashboard | Streamlit |
+| Dataset | UNSW-NB15 |
+| Development tools | VS Code, Jupyter Notebook, Git, GitHub |
 
-| REST API | FastAPI, Uvicorn |
+## Dataset
 
-| Web dashboard | Streamlit |
+This project uses the **UNSW-NB15 dataset**, a network intrusion detection dataset developed for cybersecurity research.
 
-| Development environment | Jupyter Notebook, VS Code |
+Official dataset source:  
+https://research.unsw.edu.au/projects/unsw-nb15-dataset
 
+The dataset contains normal network traffic and multiple categories of malicious activity. The project uses a binary classification target:
 
+- `0` — Normal traffic
+- `1` — Attack traffic
 
-\## Dataset
+The model uses 42 input features after excluding the record identifier and target-related columns: `id`, `label`, and `attack_cat`.
 
+Categorical features include `proto`, `service`, and `state`. These features are handled by the preprocessing pipeline.
 
+### Dataset preparation
 
-This project uses the \*\*UNSW-NB15\*\* network intrusion detection dataset.
+The original dataset files and processed training and testing files are not included in the GitHub repository because of their size and the project's `.gitignore` rules.
 
+After cloning the repository:
 
-
-Official source: \[UNSW-NB15 Dataset](https://research.unsw.edu.au/projects/unsw-nb15-dataset)
-
-
-
-The prepared training and testing datasets contain network traffic features and a binary label:
-
-
-
-\- `0`: Normal traffic
-
-\- `1`: Attack traffic
-
-
-
-The `attack\_cat` field and record identifier are excluded from the binary classification input features to prevent target leakage.
-
-
-
-\*\*Dataset note:\*\* The dataset is not included in this repository. Obtain it from the official source and place the prepared training and testing CSV files in `data/processed/` as described below. Follow the dataset provider's terms and attribution requirements.
-
-
-
-\## Project Structure
-
-
+1. Download the UNSW-NB15 dataset from the official source.
+2. Prepare the training and testing datasets in the format expected by `train_model.py`.
+3. Create the `data/processed/` directory if it does not exist.
+4. Place the processed files there using these exact filenames:
 
 ```text
-
-ai-intrusion-detection/
-
-├── api/
-
-│   └── main.py
-
-├── dashboard/
-
-│   └── app.py
-
-├── data/
-
-│   ├── raw/
-
-│   └── processed/
-
-│       ├── UNSW\_NB15\_training-set.csv
-
-│       └── UNSW\_NB15\_testing-set.csv
-
-├── models/
-
-│   └── intrusion\_detection\_pipeline.joblib
-
-├── notebooks/
-
-│   └── 01\_data\_exploration.ipynb
-
-├── results/
-
-│   ├── figures/
-
-│   │   └── model\_performance\_comparison.png
-
-│   ├── model\_comparison.csv
-
-│   └── final\_evaluation\_report.txt
-
-├── src/
-
-├── .gitignore
-
-├── requirements.txt
-
-└── README.md
-
+data/processed/
+├── UNSW_NB15_training-set.csv
+└── UNSW_NB15_testing-set.csv
 ```
 
+The training and testing files should retain the expected feature columns and target labels.
 
+## Project Structure
 
-Generated model files and dataset files may be excluded from Git through `.gitignore`. Their presence in this example describes the local development setup, not necessarily the contents of the published repository.
+```text
+AI-Powered-Network-Intrusion-Detection-System/
+├── api/
+│   └── main.py
+├── dashboard/
+│   └── app.py
+├── data/
+│   └── processed/
+│       ├── UNSW_NB15_training-set.csv
+│       └── UNSW_NB15_testing-set.csv
+├── models/
+│   └── intrusion_detection_pipeline.joblib
+├── notebooks/
+│   └── 01_data_exploration.ipynb
+├── results/
+│   ├── figures/
+│   │   └── model_performance_comparison.png
+│   ├── final_evaluation_report.txt
+│   └── model_comparison.csv
+├── src/
+├── train_model.py
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
 
+**Note:** The dataset files and trained model shown in this tree are local runtime artifacts and are excluded from GitHub. The original downloaded dataset files may also be stored under `data/` during local development. The `src/` directory is reserved for supporting source modules.
 
+## Installation and Setup
 
-\## Installation
-
-
-
-\### 1. Clone the repository
-
-
+### 1. Clone the repository
 
 ```bash
-
 git clone https://github.com/Zolla21/AI-Powered-Network-Intrusion-Detection-System.git
-
-cd ai-intrusion-detection
-
+cd AI-Powered-Network-Intrusion-Detection-System
 ```
 
-
-
-
-
-\### 2. Create a virtual environment
-
-
+### 2. Create and activate a virtual environment
 
 On Windows PowerShell:
 
-
-
 ```powershell
-
 python -m venv .venv
-
-.\\.venv\\Scripts\\Activate.ps1
-
+.\.venv\Scripts\Activate.ps1
 ```
 
+If PowerShell blocks activation, consult the official Python or Microsoft documentation for virtual environment activation policies.
 
-
-\### 3. Install dependencies
-
-
+### 3. Install dependencies
 
 ```powershell
-
 python -m pip install --upgrade pip
-
-pip install -r requirements.txt
-
+python -m pip install -r requirements.txt
 ```
 
+### 4. Prepare the dataset and train the model
 
+Ensure the processed training and testing CSV files are in `data/processed/`, using the filenames specified in the Dataset section.
 
-\### 4. Prepare the dataset and model
-
-
-### 4. Prepare the Dataset and Train the Model
-
-#### Download the dataset
-
-Obtain the UNSW-NB15 dataset from the official source:
-
-https://research.unsw.edu.au/projects/unsw-nb15-dataset
-
-Prepare the training and testing CSV files and place them in `data/processed/` using these exact filenames:
-
-- `UNSW_NB15_training-set.csv`
-- `UNSW_NB15_testing-set.csv`
-
-The dataset is not included in this repository. Follow the dataset provider's terms and attribution requirements.
-
-#### Train the model
-
-From the project root, run:
+Run:
 
 ```powershell
 python train_model.py
 ```
 
-The script trains a Random Forest classification pipeline and saves the trained model to:
+The training script trains the machine learning pipeline and saves the resulting model to:
 
 ```text
 models/intrusion_detection_pipeline.joblib
 ```
 
-The `models/` directory is created automatically if it does not exist.
+Training time depends on the computer, dataset, and model configuration.
 
-The generated model is excluded from Git because of its size. Run the training script to recreate it locally before starting the API or dashboard.
+## Running the REST API
 
-#### Explore the data
-
-To explore the dataset, compare models, and review evaluation results, open:
-
-`notebooks/01_data_exploration.ipynb`
-
-
-
-
-
-## Running the API
-
-
-
-Start the FastAPI server from the project root:
-
-
+Start the FastAPI application from the project root with the virtual environment activated:
 
 ```powershell
-
 python -m uvicorn api.main:app --reload
-
 ```
 
+The local API address is:
 
+http://127.0.0.1:8000
 
-API endpoints:
+### API documentation
 
+Open the interactive Swagger documentation:
 
+http://127.0.0.1:8000/docs
+
+### Available endpoints
 
 | Method | Endpoint | Purpose |
-
 |---|---|---|
+| GET | `/health` | Checks API health and whether the model is loaded |
+| POST | `/predict` | Predicts a traffic class from the supplied features |
 
-| GET | `/` | API information |
+The health endpoint should report that the service is healthy and the model is loaded when startup is successful.
 
-| GET | `/health` | Check API and model status |
+Use the Swagger interface to inspect the required request format and test predictions against the API.
 
-| POST | `/predict` | Classify network traffic |
+## Running the Streamlit Dashboard
 
+Open a separate PowerShell terminal, activate the same virtual environment, and navigate to the project root.
 
-
-Interactive API documentation:
-
-
-
-\[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-
-
-The prediction endpoint accepts a JSON object containing the 42 input features used by the trained model, excluding `id`, `label`, and `attack\_cat`.
-
-
-
-\## Running the Dashboard
-
-
-
-Start Streamlit in a separate terminal:
-
-
+Run:
 
 ```powershell
-
 python -m streamlit run dashboard/app.py
-
 ```
-
-
 
 Open the dashboard at:
 
+http://localhost:8501
 
+The dashboard provides an interactive interface for entering network traffic features, generating a model prediction, and viewing model evaluation information.
 
-\[http://localhost:8501](http://localhost:8501)
+Run the API and dashboard in separate terminals when using both simultaneously.
 
+## Model Training and Evaluation
 
+The project includes a Random Forest pipeline and evaluation results from experiments comparing multiple machine learning algorithms.
 
-The dashboard supports interactive predictions and displays model evaluation metrics and a confusion matrix.
+The evaluated algorithms include:
 
+- Logistic Regression
+- Decision Tree
+- Random Forest
+- Support Vector Machine (SVM)
+- Gradient Boosting
 
+The evaluation uses standard binary classification metrics:
 
-\## Model Evaluation
+| Metric | Purpose |
+|---|---|
+| Accuracy | Proportion of correctly classified observations |
+| Precision | Proportion of predicted attacks that are actual attacks |
+| Recall | Proportion of actual attacks identified by the model |
+| F1-score | Harmonic mean of precision and recall |
+| ROC-AUC | Ability to distinguish between the two classes across classification thresholds |
+| Confusion matrix | Breakdown of correct and incorrect predictions |
 
+### Reported model performance
 
+The current Random Forest pipeline evaluation reported the following results:
 
-The project compares the following algorithms:
+| Metric | Score |
+|---|---:|
+| Accuracy | 0.892 |
+| Precision | 0.851 |
+| Recall | 0.975 |
+| F1-score | 0.909 |
+| ROC-AUC | 0.980 |
 
+These are the project's reported evaluation results, not a guarantee of performance on live network traffic. Consult `results/final_evaluation_report.txt` and `results/model_comparison.csv` for the saved experiment results.
 
+### Evaluation outputs
 
-\- Logistic Regression
+The project stores its evaluation artifacts in the `results/` directory:
 
-\- Decision Tree
+- `final_evaluation_report.txt` — text-based evaluation report.
+- `model_comparison.csv` — comparative model results.
+- `figures/model_performance_comparison.png` — model performance comparison visualization.
 
-\- Random Forest
+## Security Considerations and Limitations
 
-\- Histogram-based Gradient Boosting
+- The model learns patterns from the dataset used during training and may not generalize to all real-world network environments.
+- Predictions can include false positives and false negatives.
+- High recall does not mean every attack will be detected.
+- Dataset imbalance, data leakage, preprocessing errors, and differences between training and deployment traffic can affect results.
+- The API accepts model input for classification; it does not independently capture or monitor live network packets.
+- The application is a prototype and does not replace a production intrusion detection or prevention system.
+- Before production use, implement appropriate authentication, authorization, input validation, logging, monitoring, secure deployment, and independent security testing.
+- Only use network data that you are authorized to collect and analyze.
 
+## Future Improvements
 
+Potential extensions include:
 
-Evaluation metrics include:
+- Integrating live network traffic capture.
+- Adding multiclass attack classification.
+- Evaluating additional machine learning and deep learning models.
+- Improving detection of previously unseen attacks.
+- Adding explainable AI techniques to interpret predictions.
+- Developing automated monitoring and alerting.
+- Deploying the API and dashboard to a secure cloud environment.
+- Adding automated testing and a continuous integration workflow.
 
+## Author
 
-
-\- \*\*Accuracy:\*\* Overall proportion of correct predictions.
-
-\- \*\*Precision:\*\* Proportion of predicted attacks that are actual attacks.
-
-\- \*\*Recall:\*\* Proportion of actual attacks detected.
-
-\- \*\*F1-score:\*\* Harmonic mean of precision and recall.
-
-\- \*\*ROC-AUC:\*\* Ability to distinguish between normal and attack traffic.
-
-
-
-Results are saved in `results/model\_comparison.csv`, with the comparison chart in `results/figures/model\_performance\_comparison.png`.
-
-
-
-The final model's evaluation report is saved in `results/final\_evaluation\_report.txt`.
-
-
-
-Actual performance figures should be taken from the generated evaluation files rather than assumed from the project description.
-
-
-
-\## Security and Limitations
-
-
-
-\- Predictions are model estimates and are not definitive security verdicts.
-
-\- The model's performance depends on input quality and how closely real network traffic resembles the training data.
-
-\- The current application accepts manually supplied feature values; it does not capture live packets or automatically monitor a network interface.
-
-\- The project is a prototype and should not be treated as a production security control without additional validation, monitoring, and security testing.
-
-\- Model probabilities may require calibration before they can be interpreted as reliable real-world risk estimates.
-
-
-
-\## Future Improvements
-
-
-
-\- Integrate live network traffic capture.
-
-\- Add explainable AI for individual predictions.
-
-\- Extend the system to classify specific attack categories.
-
-\- Improve input validation and API security.
-
-\- Add authentication, logging, and monitoring.
-
-\- Deploy the API and dashboard to a cloud environment.
-
-\- Add automated testing and continuous integration.
-
-
-
-\## Author
-
-
-
-\*\*Zelalem Fissiha\*\*
-
-
+**Zelalem Fissiha**
 
 Fullstack Developer | Data Analyst | Machine Learning Researcher | Lecturer
 
+GitHub: https://github.com/Zolla21
 
+Portfolio: https://zolla21.github.io/
 
-This project demonstrates practical skills in machine learning, data preprocessing, model evaluation, REST API development, and interactive dashboard design.
+## License
 
-
-
-\## License
-
-
-
-Add an appropriate license before distributing the source code. Verify the dataset's own terms separately.
-
-
-
+No license is specified in this repository unless a license file is added. All rights to the project remain with their respective owners, subject to the applicable dataset terms and any third-party licenses.
 
