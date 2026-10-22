@@ -213,34 +213,50 @@ pip install -r requirements.txt
 \### 4. Prepare the dataset and model
 
 
+### 4. Prepare the Dataset and Train the Model
 
-Place the prepared CSV files in `data/processed/`:
+#### Download the dataset
 
+Obtain the UNSW-NB15 dataset from the official source:
 
+https://research.unsw.edu.au/projects/unsw-nb15-dataset
 
-\- `UNSW\_NB15\_training-set.csv`
+Prepare the training and testing CSV files and place them in `data/processed/` using these exact filenames:
 
-\- `UNSW\_NB15\_testing-set.csv`
+- `UNSW_NB15_training-set.csv`
+- `UNSW_NB15_testing-set.csv`
 
+The dataset is not included in this repository. Follow the dataset provider's terms and attribution requirements.
 
+#### Train the model
 
-Run the notebook in `notebooks/` to explore the data, preprocess the features, train and compare models, and save the final model pipeline.
+From the project root, run:
 
-
-
-Ensure that the trained pipeline exists at:
-
-
-
-```text
-
-models/intrusion\_detection\_pipeline.joblib
-
+```powershell
+python train_model.py
 ```
 
+The script trains a Random Forest classification pipeline and saves the trained model to:
+
+```text
+models/intrusion_detection_pipeline.joblib
+```
+
+The `models/` directory is created automatically if it does not exist.
+
+The generated model is excluded from Git because of its size. Run the training script to recreate it locally before starting the API or dashboard.
+
+#### Explore the data
+
+To explore the dataset, compare models, and review evaluation results, open:
+
+`notebooks/01_data_exploration.ipynb`
 
 
-\## Running the API
+
+
+
+## Running the API
 
 
 
