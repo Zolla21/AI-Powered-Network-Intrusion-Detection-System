@@ -168,7 +168,7 @@ Generated model files and dataset files may be excluded from Git through `.gitig
 
 ```bash
 
-git clone https://github.com/Zolla21/ai-intrusion-detection.git
+git clone https://github.com/Zolla21/AI-Powered-Network-Intrusion-Detection-System.git
 
 cd ai-intrusion-detection
 
@@ -415,6 +415,7 @@ This project demonstrates practical skills in machine learning, data preprocessi
 
 
 Add an appropriate license before distributing the source code. Verify the dataset's own terms separately.
+
 
 
 
