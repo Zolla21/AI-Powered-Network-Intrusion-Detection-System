@@ -200,16 +200,6 @@ else:
         f"{TEST_PATH}"
     )
 
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score,
-    confusion_matrix,
-)
-
-st.header("Model Evaluation")
 st.write("Performance on the held-out UNSW-NB15 test dataset.")
 
 # Load the original test dataset
