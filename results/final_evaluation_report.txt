@@ -1,0 +1,19 @@
+AI-POWERED NETWORK INTRUSION DETECTION
+Final Random Forest Evaluation Report
+=============================================
+
+Accuracy: 0.8921
+Precision: 0.8510
+Recall: 0.9746
+F1-Score: 0.9086
+ROC-AUC: 0.9804
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      Normal       0.96      0.79      0.87     37000
+      Attack       0.85      0.97      0.91     45332
+
+    accuracy                           0.89     82332
+   macro avg       0.91      0.88      0.89     82332
+weighted avg       0.90      0.89      0.89     82332

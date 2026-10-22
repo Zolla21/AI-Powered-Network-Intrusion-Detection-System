@@ -1,0 +1,42 @@
+﻿
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dataset files - keep large data out of GitHub
+data/*.csv
+data/*.pdf
+data/raw/*
+!data/raw/README.md
+data/processed/*
+!data/processed/README.md
+
+# Trained model files
+models/*.joblib
+models/*.pkl
+models/*.pickle
+
+# Logs
+*.log
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
